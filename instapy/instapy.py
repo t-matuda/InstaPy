@@ -2118,7 +2118,17 @@ class InstaPy:
                                 reason.encode('utf-8')))
                         inap_img += 1
 
-                    result[link] = { "like_state": like_state, "scope": scope, "reason": reason }
+
+                    # like_state: 実際にlikeされたか
+                    # scope: like前のチェック、NGワードだけチェックしておく？
+                    # reason: like前のチェックの詳細
+                    # msg: likeで発生したエラーログ
+                    # state: like_stateがfalseでもscopeがUndesired word(NGワードに引っかかった)またはmsgがalready liked(いいね済み)であればstateはTrueとする
+                    state = True
+                    if not like_state and (scope != "Undesired word" or msg != "already liked"):
+                        state = False
+                    
+                    result[link] = { "state": state, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg }
 
                 except NoSuchElementException as err:
                     self.logger.error('Invalid Page: {}'.format(err))
