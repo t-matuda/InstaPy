@@ -1933,12 +1933,14 @@ class InstaPy:
         commented = 0
         followed = 0
         not_valid_users = 0
-        result = {}
+        action_result = {}
 
         usernames = usernames or []
         self.quotient_breach = False
 
         for index, username in enumerate(usernames):
+            action_result[username] = { "state": True, "link": [], "msg": "" }
+
             if self.quotient_breach:
                 break
 
@@ -1954,6 +1956,7 @@ class InstaPy:
                 if not validation:
                     self.logger.info("--> Not a valid user: {}".format(details))
                     not_valid_users += 1
+                    action_result[username]["msg"] = "Not a valid user: {}".format(details)
                     continue
 
             try:
@@ -2030,9 +2033,7 @@ class InstaPy:
                                    self.mandatory_character,
                                    self.check_character_set,
                                    self.ignore_if_contains,
-                                   self.logger))
-
-                    
+                                   self.logger)) 
 
                     if not inappropriate and self.delimit_liking:
                         self.liking_approved = verify_liking(self.browser,
@@ -2046,6 +2047,7 @@ class InstaPy:
                                                      self.blacklist,
                                                      self.logger,
                                                      self.logfolder)
+
                         if like_state is True:
                             total_liked_img += 1
                             liked_img += 1
@@ -2118,7 +2120,6 @@ class InstaPy:
                                 reason.encode('utf-8')))
                         inap_img += 1
 
-
                     # like_state: 実際にlikeされたか
                     # scope: like前のチェック、NGワードだけチェックしておく？
                     # reason: like前のチェックの詳細
@@ -2128,7 +2129,8 @@ class InstaPy:
                     if not like_state and (scope != "Undesired word" or msg != "already liked"):
                         state = False
                     
-                    result[link] = { "state": state, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg }
+                    action_result[username]["state"] = action_result[username]["state"] and state
+                    action_result[username][link].append({ "state": state, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg })
 
                 except NoSuchElementException as err:
                     self.logger.error('Invalid Page: {}'.format(err))
@@ -2151,7 +2153,7 @@ class InstaPy:
         self.inap_img += inap_img
         self.not_valid_users += not_valid_users
 
-        return result
+        return action_result
 
     def interact_by_users(self,
                           usernames,
