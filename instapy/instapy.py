@@ -2126,7 +2126,7 @@ class InstaPy:
                     # msg: likeで発生したエラーログ
                     # state: like_stateがfalseでもscopeがUndesired word(NGワードに引っかかった)またはmsgがalready liked(いいね済み)であればstateはTrueとする
                     state = True
-                    if not like_state and (scope != "Undesired word" or msg != "already liked"):
+                    if not like_state and scope != "Undesired word" and msg != "already liked":
                         state = False
                     
                     action_result[username]["state"] = action_result[username]["state"] and state
