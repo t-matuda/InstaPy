@@ -1939,7 +1939,7 @@ class InstaPy:
         self.quotient_breach = False
 
         for index, username in enumerate(usernames):
-            action_result[username] = { "state": True, "link": [], "msg": "" }
+            action_result[username] = { "state": True, "links": [], "msg": "" }
 
             if self.quotient_breach:
                 break
@@ -2130,7 +2130,7 @@ class InstaPy:
                         state = False
                     
                     action_result[username]["state"] = action_result[username]["state"] and state
-                    action_result[username][link].append({ "state": state, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg })
+                    action_result[username]["links"].append({ "state": state, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg, "link": link })
 
                 except NoSuchElementException as err:
                     self.logger.error('Invalid Page: {}'.format(err))
