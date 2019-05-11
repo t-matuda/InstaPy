@@ -1933,6 +1933,7 @@ class InstaPy:
         commented = 0
         followed = 0
         not_valid_users = 0
+        result = {}
 
         usernames = usernames or []
         self.quotient_breach = False
@@ -1996,8 +1997,6 @@ class InstaPy:
 
             # Reset like counter for every username
             liked_img = 0
-
-            result = {}
 
             for i, link in enumerate(links):
                 # Check if target has reached
