@@ -1997,6 +1997,8 @@ class InstaPy:
             # Reset like counter for every username
             liked_img = 0
 
+            result = {}
+
             for i, link in enumerate(links):
                 # Check if target has reached
                 if liked_img >= amount:
@@ -2016,7 +2018,7 @@ class InstaPy:
                     break
 
                 self.logger.info('Post [{}/{}]'.format(liked_img + 1, amount))
-                self.logger.info(link)
+                self.logger.info(link)                
 
                 try:
                     inappropriate, user_name, is_video, reason, scope = (
@@ -2030,6 +2032,8 @@ class InstaPy:
                                    self.check_character_set,
                                    self.ignore_if_contains,
                                    self.logger))
+
+                    
 
                     if not inappropriate and self.delimit_liking:
                         self.liking_approved = verify_liking(self.browser,
@@ -2115,6 +2119,8 @@ class InstaPy:
                                 reason.encode('utf-8')))
                         inap_img += 1
 
+                    result[link] = { "like_state": like_state, "scope": scope, "reason": reason }
+
                 except NoSuchElementException as err:
                     self.logger.error('Invalid Page: {}'.format(err))
 
@@ -2136,7 +2142,7 @@ class InstaPy:
         self.inap_img += inap_img
         self.not_valid_users += not_valid_users
 
-        return self
+        return result
 
     def interact_by_users(self,
                           usernames,
