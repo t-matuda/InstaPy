@@ -2024,6 +2024,7 @@ class InstaPy:
 
                 try:
                     like_state = False
+                    msg = ""
                     scope = ""
                     reason = ""
                     inappropriate, user_name, is_video, reason, scope = (
