@@ -2023,6 +2023,9 @@ class InstaPy:
                 self.logger.info(link)                
 
                 try:
+                    like_state = False
+                    scope = ""
+                    reason = ""
                     inappropriate, user_name, is_video, reason, scope = (
                         check_link(self.browser,
                                    link,
