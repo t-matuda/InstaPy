@@ -81,8 +81,7 @@ from .pods_util import get_recent_posts_from_pods
 from .pods_util import share_my_post_with_pods
 from .pods_util import share_with_pods_restriction
 
-from .analyze_util import get_likes_count
-from .analyze_util import get_comments_count
+from .analyze_util import get_post_engagement
 
 
 # import exceptions
@@ -5424,9 +5423,7 @@ class InstaPy:
                                    self.logger))
 
                     if not inappropriate:
-                        likes_count = get_likes_count(self.browser, self.logger)
-                        comments_count = get_comments_count(self.browser, self.logger)
-
+                        likes_count, comments_count = get_post_engagement(self.browser, self.logger)
                         tmp_result["posts"].append({ "link": link, "likes_counts": likes_count, "comments_count": comments_count })
 
                     else:
