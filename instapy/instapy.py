@@ -5423,8 +5423,8 @@ class InstaPy:
                                    self.logger))
 
                     if not inappropriate:
-                        likes_count, comments_count = get_post_engagement(self.browser, self.logger)
-                        tmp_result["posts"].append({ "link": link, "likes_counts": likes_count, "comments_count": comments_count })
+                        likes_count, comments_count, tags = get_post_engagement(self.browser, link, self.logger)
+                        tmp_result["posts"].append({ "link": link, "likes_counts": likes_count, "comments_count": comments_count, "tags": tags })
 
                     else:
                         self.logger.info("--> Inappropriate post. {}\n".format(reason.encode('utf-8')))

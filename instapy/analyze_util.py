@@ -16,6 +16,7 @@ from .util import get_action_delay
 from .util import explicit_wait
 from .util import extract_text_from_element
 from .like_util import check_link
+from .like_util import get_tags
 from .quota_supervisor import quota_supervisor
 from .unfollow_util import get_following_status
 from .comment_util import is_commenting_enabled
@@ -26,7 +27,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException    
 
 
-def get_post_engagement(browser, logger):
+def get_post_engagement(browser, link, logger):
+    # コメント数
     comments_count = 0
     commenting_state, msg = is_commenting_enabled(browser, logger)
     if commenting_state is not True:
@@ -37,6 +39,7 @@ def get_post_engagement(browser, logger):
         logger.info("--> Not commenting! {}".format(msg))
 
 
+    # いいね数
     """ Get the amount of existing existing likes"""
     likes_count = 0
     try:
@@ -69,4 +72,7 @@ def get_post_engagement(browser, logger):
             except NoSuchElementException:
                 logger.info("Failed to check likes' count\n")
 
-    return likes_count, comments_count
+    # ハッシュタグ
+    tags = get_tags(browser, link)
+
+    return likes_count, comments_count, tags
