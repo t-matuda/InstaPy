@@ -51,6 +51,7 @@ from .util import save_account_progress
 from .util import parse_cli_args
 from .util import get_cord_location
 from .util import get_bounding_box
+from .util import get_relationship_counts
 from .unfollow_util import get_given_user_followers
 from .unfollow_util import get_given_user_following
 from .unfollow_util import unfollow
@@ -79,6 +80,10 @@ from .file_manager import get_logfolder
 from .pods_util import get_recent_posts_from_pods
 from .pods_util import share_my_post_with_pods
 from .pods_util import share_with_pods_restriction
+
+from .analyze_util import get_likes_count
+from .analyze_util import get_comments_count
+
 
 # import exceptions
 from selenium.common.exceptions import NoSuchElementException
@@ -5356,3 +5361,81 @@ class InstaPy:
             self.logger.error(err)
 
         return self
+    
+    def analyze_users(self, usernames, amount=15, randomize=False, media=None):
+        if self.aborting:
+            return self
+
+        if not isinstance(usernames, list):
+            usernames = [usernames]
+
+        usernames = usernames or []
+        self.quotient_breach = False
+
+        analysys_results = []
+        for index, username in enumerate(usernames):
+            if self.quotient_breach:
+                break
+
+            self.logger.info("Username [{}/{}]".format(index + 1, len(usernames)))
+            self.logger.info("--> {}".format(username.encode('utf-8')))
+
+            followers_count, following_count = get_relationship_counts(browser, username, logger)
+            
+            timestamp = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+            tmp_result = { "username": username, "followers_count": followers_count, "following_count": following_count, "timestamp": timestamp, "posts": [] }
+
+            try:
+                links = get_links_for_username(
+                    self.browser,
+                    self.username,
+                    username,
+                    amount,
+                    self.logger,
+                    self.logfolder,
+                    randomize,
+                    media)
+
+            except NoSuchElementException:
+                self.logger.error('Element not found, skipping this username')
+                continue
+
+            if links is False:
+                continue
+
+            # Reset like counter for every username
+            liked_img = 0
+
+            for i, link in enumerate(links):
+                self.logger.info('Post [{}/{}]'.format(liked_img + 1, amount))
+                self.logger.info(link)
+
+                try:
+                    inappropriate, user_name, is_video, reason, scope = (
+                        check_link(self.browser,
+                                   link,
+                                   self.dont_like,
+                                   self.mandatory_words,
+                                   self.mandatory_language,
+                                   self.is_mandatory_character,
+                                   self.mandatory_character,
+                                   self.check_character_set,
+                                   self.ignore_if_contains,
+                                   self.logger))
+
+                    if not inappropriate:
+                        likes_count = get_likes_count(self.browser, self.logger)
+                        comments_count = get_comments_count(self.browser, self.logger)
+
+                        tmp_result["posts"].append({ "link": link, "likes_counts": likes_count, "comments_count": comments_count })
+
+                    else:
+                        self.logger.info("--> Inappropriate post. {}\n".format(reason.encode('utf-8')))
+
+
+                except NoSuchElementException as err:
+                    self.logger.error('Invalid Page: {}'.format(err))
+
+            analysys_results.append(tmp_result)
+
+        return analysys_results
