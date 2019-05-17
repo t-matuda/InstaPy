@@ -27,6 +27,16 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 
 def get_post_engagement(browser, logger):
+    comments_count = 0
+    commenting_state, msg = is_commenting_enabled(browser, logger)
+    if commenting_state is not True:
+        logger.info("--> Not commenting! {}".format(msg))
+
+    comments_count, msg = get_comments_count(browser, logger)
+    if not comments_count:
+        logger.info("--> Not commenting! {}".format(msg))
+
+
     """ Get the amount of existing existing likes"""
     likes_count = 0
     try:
@@ -58,14 +68,5 @@ def get_post_engagement(browser, logger):
 
             except NoSuchElementException:
                 logger.info("Failed to check likes' count\n")
-    
-    omments_count = 0
-    commenting_state, msg = is_commenting_enabled(browser, logger)
-    if commenting_state is not True:
-        logger.info("--> Not commenting! {}".format(msg))
-
-    comments_count, msg = get_comments_count(browser, logger)
-    if not comments_count:
-        logger.info("--> Not commenting! {}".format(msg))
 
     return likes_count, comments_count
