@@ -5382,7 +5382,7 @@ class InstaPy:
 
             followers_count, following_count = get_relationship_counts(self.browser, username, self.logger)
             
-            date = datetime.now().strftime("%Y/%m/%d")
+            date = datetime.now().strftime("%Y%m%d")
             timestamp = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
             tmp_result = { "username": username, "followers_count": followers_count, "following_count": following_count, "timestamp": timestamp, "date": date, "posts": [] }
 
