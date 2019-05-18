@@ -900,7 +900,7 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
     if post_page is None:
         logger.warning(
             'Unavailable Page: {}'.format(post_link.encode('utf-8')))
-        return True, None, None, 'Unavailable Page', "Failure"
+        return True, None, None, 'Unavailable Page', "Failure", ''
 
     """Gets the description of the post's link and checks for the dont_like
     tags"""
@@ -994,12 +994,12 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
         if not any((word in image_text for word in mandatory_words)):
             return True, user_name, is_video, 'Mandatory words not ' \
                                               'fulfilled', "Not mandatory " \
-                                                           "likes"
+                                                           "likes", location_name
 
     image_text_lower = [x.lower() for x in image_text]
     ignore_if_contains_lower = [x.lower() for x in ignore_if_contains]
     if any((word in image_text_lower for word in ignore_if_contains_lower)):
-        return False, user_name, is_video, 'None', "Pass"
+        return False, user_name, is_video, 'None', "Pass", location_name
 
     dont_like_regex = []
 
@@ -1034,6 +1034,6 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
             inapp_unit = 'Inappropriate! ~ contains "{}"'.format(
                 quashed if iffy == quashed else
                 '" in "'.join([str(iffy), str(quashed)]))
-            return True, user_name, is_video, inapp_unit, "Undesired word"
+            return True, user_name, is_video, inapp_unit, "Undesired word", location_name
 
     return False, user_name, is_video, 'None', "Success", location_name
