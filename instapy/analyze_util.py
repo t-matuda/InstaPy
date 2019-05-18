@@ -25,6 +25,7 @@ from .comment_util import get_comments_count
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException    
+from selenium.common.exceptions import JavascriptException
 
 
 def get_post_engagement(browser, link, logger):
@@ -73,6 +74,12 @@ def get_post_engagement(browser, link, logger):
                 logger.info("Failed to check likes' count\n")
 
     # ハッシュタグ
-    tags = get_tags(browser, link)
-
+    try:
+        tags = get_tags(browser, link)
+    
+    except JavascriptException as err:
+        logger.error('Can not get tags: {}'.format(err))
+        tags = []
+    
+    
     return likes_count, comments_count, tags
