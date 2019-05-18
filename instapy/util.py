@@ -2190,7 +2190,7 @@ def get_full_name(browser, username, logfolder):
                 "graphql.user.full_name")
 
         except WebDriverException:
-            full_name = None
+            full_name = ''
 
     return full_name
 
