@@ -38,6 +38,7 @@ from .settings import Settings
 from .settings import localize_path
 from .print_log_writer import log_follower_num
 from .print_log_writer import log_following_num
+from .print_log_writer import log_full_name
 
 from .time_util import sleep
 from .time_util import set_sleep_percentage
@@ -154,6 +155,7 @@ class InstaPy:
         self.username = username or os.environ.get('INSTA_USER')
         self.password = password or os.environ.get('INSTA_PW')
         Settings.profile["name"] = self.username
+        self.full_name = ''
 
         self.split_db = split_db
         if self.split_db:
@@ -427,6 +429,7 @@ class InstaPy:
         self.following_num = log_following_num(self.browser,
                                                self.username,
                                                self.logfolder)
+        self.full_name = log_full_name(self.browser, self.username, self.logfolder)
 
         return self
 
