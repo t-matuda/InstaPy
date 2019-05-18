@@ -5382,7 +5382,7 @@ class InstaPy:
             full_name = get_full_name(self.browser, username, self.logger)
 
             self.logger.info("Username [{}/{}]".format(index + 1, len(usernames)))
-            self.logger.info("--> {}, {}, {}, {}".format(username.encode('utf-8'), full_name.encode(('utf-8'), followers_count, following_count)))
+            self.logger.info("--> {}, {}, {}, {}".format(username.encode('utf-8'), full_name.encode('utf-8'), followers_count, following_count))
 
 
             date = datetime.now().strftime("%Y%m%d")
