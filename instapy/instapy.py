@@ -5408,9 +5408,9 @@ class InstaPy:
             liked_img = 0
 
             for i, link in enumerate(links):
-                self.logger.info('Post [{}/{}]'.format(liked_img + 1, amount))
+                self.logger.info('Post [{}/{}]'.format(liked_img + 1 + i, amount))
                 self.logger.info(link)
-
+    
                 try:
                     inappropriate, user_name, is_video, reason, scope, location = (
                         check_link_with_location(self.browser,
@@ -5430,7 +5430,6 @@ class InstaPy:
 
                     else:
                         self.logger.info("--> Inappropriate post. {}\n".format(reason.encode('utf-8')))
-
 
                 except NoSuchElementException as err:
                     self.logger.error('Invalid Page: {}'.format(err))
