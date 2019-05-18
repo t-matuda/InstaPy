@@ -24,6 +24,7 @@ from .comment_util import comment_image
 from .comment_util import verify_commenting
 from .comment_util import get_comments_on_post
 from .like_util import check_link
+from .like_util import check_link_with_location
 from .like_util import verify_liking
 from .like_util import get_links_for_tag
 from .like_util import get_links_from_feed
@@ -5410,8 +5411,8 @@ class InstaPy:
                 self.logger.info(link)
 
                 try:
-                    inappropriate, user_name, is_video, reason, scope = (
-                        check_link(self.browser,
+                    inappropriate, user_name, is_video, reason, scope, location = (
+                        check_link_with_location(self.browser,
                                    link,
                                    self.dont_like,
                                    self.mandatory_words,
@@ -5424,7 +5425,7 @@ class InstaPy:
 
                     if not inappropriate:
                         likes_count, comments_count, tags = get_post_engagement(self.browser, link, self.logger)
-                        tmp_result["posts"].append({ "link": link, "likes_count": likes_count, "comments_count": comments_count, "tags": tags })
+                        tmp_result["posts"].append({ "link": link, "likes_count": likes_count, "comments_count": comments_count, "location": location, "tags": tags })
 
                     else:
                         self.logger.info("--> Inappropriate post. {}\n".format(reason.encode('utf-8')))
