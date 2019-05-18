@@ -38,7 +38,6 @@ from .settings import Settings
 from .settings import localize_path
 from .print_log_writer import log_follower_num
 from .print_log_writer import log_following_num
-from .print_log_writer import log_full_name
 
 from .time_util import sleep
 from .time_util import set_sleep_percentage
@@ -54,6 +53,7 @@ from .util import parse_cli_args
 from .util import get_cord_location
 from .util import get_bounding_box
 from .util import get_relationship_counts
+from .util import get_full_name
 from .unfollow_util import get_given_user_followers
 from .unfollow_util import get_given_user_following
 from .unfollow_util import unfollow
@@ -155,7 +155,6 @@ class InstaPy:
         self.username = username or os.environ.get('INSTA_USER')
         self.password = password or os.environ.get('INSTA_PW')
         Settings.profile["name"] = self.username
-        self.full_name = ''
 
         self.split_db = split_db
         if self.split_db:
@@ -429,7 +428,6 @@ class InstaPy:
         self.following_num = log_following_num(self.browser,
                                                self.username,
                                                self.logfolder)
-        self.full_name = log_full_name(self.browser, self.username, self.logfolder)
 
         return self
 
@@ -5380,14 +5378,16 @@ class InstaPy:
             if self.quotient_breach:
                 break
 
-            self.logger.info("Username [{}/{}]".format(index + 1, len(usernames)))
-            self.logger.info("--> {}".format(username.encode('utf-8')))
-
             followers_count, following_count = get_relationship_counts(self.browser, username, self.logger)
-            
+            full_name = get_full_name(self.browser, username, self.logger)
+
+            self.logger.info("Username [{}/{}]".format(index + 1, len(usernames)))
+            self.logger.info("--> {}, {}, {}, {}".format(username.encode('utf-8'), full_name.encode(('utf-8'), followers_count, following_count)))
+
+
             date = datetime.now().strftime("%Y%m%d")
             timestamp = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-            tmp_result = { "username": username, "followers_count": followers_count, "following_count": following_count, "timestamp": timestamp, "date": date, "posts": [] }
+            tmp_result = { "username": username, "full_name": full_name, "followers_count": followers_count, "following_count": following_count, "timestamp": timestamp, "date": date, "posts": [] }
 
             try:
                 links = get_links_for_username(

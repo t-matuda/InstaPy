@@ -2168,6 +2168,31 @@ def get_bounding_box(latitude_in_degrees, longitude_in_degrees, half_side_in_mil
 
     return bbox
 
+def get_full_name(browser, username, logfolder):
+    """Prints and logs the current number of followers to
+    a seperate file"""
+    user_link = "https://www.instagram.com/{}".format(username)
+    web_address_navigator(browser, user_link)
+
+    try:
+        full_name = browser.execute_script(
+            "return window._sharedData.""entry_data.ProfilePage[0]."
+            "graphql.user.edge_followed_by.full_name")
+
+    except WebDriverException:  # handle the possible `entry_data` error
+        try:
+            browser.execute_script("location.reload()")
+            update_activity()
+
+            sleep(1)
+            full_name = browser.execute_script(
+                "return window._sharedData.""entry_data.ProfilePage[0]."
+                "graphql.user.edge_followed_by.full_name")
+
+        except WebDriverException:
+            full_name = None
+
+    return full_name
 
 class CustomizedArgumentParser(ArgumentParser):
     """
