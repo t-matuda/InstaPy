@@ -2177,7 +2177,7 @@ def get_full_name(browser, username, logfolder):
     try:
         full_name = browser.execute_script(
             "return window._sharedData.""entry_data.ProfilePage[0]."
-            "graphql.user.edge_followed_by.full_name")
+            "graphql.user.full_name")
 
     except WebDriverException:  # handle the possible `entry_data` error
         try:
@@ -2187,7 +2187,7 @@ def get_full_name(browser, username, logfolder):
             sleep(1)
             full_name = browser.execute_script(
                 "return window._sharedData.""entry_data.ProfilePage[0]."
-                "graphql.user.edge_followed_by.full_name")
+                "graphql.user.full_name")
 
         except WebDriverException:
             full_name = None
