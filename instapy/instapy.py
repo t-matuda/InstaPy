@@ -5385,7 +5385,7 @@ class InstaPy:
             self.logger.info("--> {}, {}, {}, {}".format(username.encode('utf-8'), full_name.encode('utf-8'), followers_count, following_count))
 
 
-            date = datetime.now().strftime("%Y%m%d")
+            date = datetime.now().strftime("%Y%m")
             timestamp = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
             tmp_result = { "username": username, "full_name": full_name, "followers_count": followers_count, "following_count": following_count, "timestamp": timestamp, "date": date, "posts": [] }
 
