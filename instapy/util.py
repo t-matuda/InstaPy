@@ -1023,7 +1023,7 @@ def get_relationship_counts(browser, username, logger):
     return followers_count, following_count
 
 
-def web_address_navigator(browser, link):
+def web_address_navigator(browser, link, sleep_time=2):
     """Checks and compares current URL of web page and the URL to be
     navigated and if it is different, it does navigate"""
     current_url = get_current_url(browser)
@@ -1049,7 +1049,7 @@ def web_address_navigator(browser, link):
                 browser.get(link)
                 # update server calls
                 update_activity()
-                sleep(2)
+                sleep(sleep_time)
                 break
 
             except TimeoutException as exc:
@@ -1061,7 +1061,7 @@ def web_address_navigator(browser, link):
                             str(link).encode("utf-8"),
                             str(exc).encode("utf-8")))
                 total_timeouts += 1
-                sleep(2)
+                sleep(sleep_time)
 
 
 @contextmanager
