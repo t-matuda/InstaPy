@@ -15,6 +15,7 @@ from .util import get_number_of_posts
 from .util import get_action_delay
 from .util import explicit_wait
 from .util import extract_text_from_element
+from .util import get_cord_location
 from .quota_supervisor import quota_supervisor
 from .unfollow_util import get_following_status
 
@@ -900,7 +901,7 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
     if post_page is None:
         logger.warning(
             'Unavailable Page: {}'.format(post_link.encode('utf-8')))
-        return True, None, None, 'Unavailable Page', "Failure", ''
+        return True, None, None, 'Unavailable Page', "Failure", '', '', 0, 0
 
     """Gets the description of the post's link and checks for the dont_like
     tags"""
@@ -921,6 +922,10 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
     logger.info('Link: {}'.format(post_link.encode('utf-8')))
     
     if location_name:
-        logger.info('Location: {}'.format(location_name.encode('utf-8')))
+        lat, lon = get_cord_location(browser, location['id'])
+        logger.info('Location: {}, lat={}, lon={}'.format(location_name.encode('utf-8'), lat, lon))
+    else:
+        lat = None
+        lon = None
 
-    return False, user_name, is_video, 'None', "Success", location_name
+    return False, user_name, is_video, 'None', "Success", location_name, lat, lon
