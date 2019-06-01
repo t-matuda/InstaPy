@@ -924,6 +924,7 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
     if location_name:
         lat, lon = get_cord_location(browser, location['id'])
         logger.info('Location: {}, lat={}, lon={}'.format(location_name.encode('utf-8'), lat, lon))
+        web_address_navigator(browser, post_link, 0)
     else:
         lat = None
         lon = None
