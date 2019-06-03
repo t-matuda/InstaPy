@@ -19,5 +19,5 @@ session = InstaPy(username=insta_username,
                   bypass_suspicious_attempt=False)
 
 with smart_run(session):
-    result = session.analyze_users(['10hinata06'], 5, False, None)
+    result = session.analyze_users(['93_0920'], 1, False, None)
     print(result)

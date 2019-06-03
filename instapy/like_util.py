@@ -901,7 +901,7 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
     if post_page is None:
         logger.warning(
             'Unavailable Page: {}'.format(post_link.encode('utf-8')))
-        return True, None, None, 'Unavailable Page', "Failure", '', '', 0, 0
+        return True, None, None, 'Unavailable Page', "Failure", '', '', 0, 0, 0
 
     """Gets the description of the post's link and checks for the dont_like
     tags"""
@@ -918,8 +918,10 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
         user_name = media['owner']['username']
 
     
+
     logger.info('Image from: {}'.format(user_name.encode('utf-8')))
     logger.info('Link: {}'.format(post_link.encode('utf-8')))
+    taken_at_timestamp = media['taken_at_timestamp']
     
     if location_name:
         lat, lon = get_cord_location(browser, location['id'])
@@ -929,4 +931,4 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
         lat = None
         lon = None
 
-    return False, user_name, is_video, 'None', "Success", location_name, lat, lon
+    return False, user_name, is_video, 'None', "Success", location_name, lat, lon, taken_at_timestamp
