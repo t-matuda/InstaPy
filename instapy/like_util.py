@@ -901,7 +901,7 @@ def check_link_with_location(browser, post_link, dont_like, mandatory_words,
     if post_page is None:
         logger.warning(
             'Unavailable Page: {}'.format(post_link.encode('utf-8')))
-        return True, None, None, 'Unavailable Page', "Failure", '', '', 0, 0, 0
+        return True, None, None, 'Unavailable Page', "Failure", '', 0, 0, 0
 
     """Gets the description of the post's link and checks for the dont_like
     tags"""
