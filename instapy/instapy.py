@@ -2089,13 +2089,8 @@ class InstaPy:
                                                      user_name,
                                                      self.blacklist,
                                                      self.logger,
-<<<<<<< HEAD
-                                                     self.logfolder)
-
-=======
                                                      self.logfolder,
                                                      total_liked_img)
->>>>>>> upstream/master
                         if like_state is True:
                             total_liked_img += 1
                             liked_img += 1
