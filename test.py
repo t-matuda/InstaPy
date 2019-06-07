@@ -15,9 +15,9 @@ insta_username = sys.argv[1]  # <- enter username here
 insta_password = sys.argv[2]  # <- enter password here
 session = InstaPy(username=insta_username,
                   password=insta_password,
-                  headless_browser=True,
-                  bypass_suspicious_attempt=False)
+                  headless_browser=False,
+                  bypass_suspicious_attempt=True)
 
 with smart_run(session):
-    result = session.analyze_users(['93_0920'], 1, False, None)
+    result = session.grab_followers('kaba_proj', 10)
     print(result)
