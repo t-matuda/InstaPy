@@ -5497,7 +5497,7 @@ class InstaPy:
 
             # Reset like counter for every username
             liked_img = 0
-
+            exception_count = 0
             for i, link in enumerate(links):
                 self.logger.info('Post [{}/{}]'.format(liked_img + 1 + i, amount))
                 self.logger.info(link)
@@ -5524,6 +5524,12 @@ class InstaPy:
 
                 except NoSuchElementException as err:
                     self.logger.error('Invalid Page: {}'.format(err))
+                except Exception as err:
+                    exception_count = exception_count + 1
+                    self.logger.error('Unknown error has occured[{}]: {}'.format(exception_count, err))
+
+                if exception_count >= 3:
+                    raise RuntimeError("ERRORの発生回数が指定回数を超えたので終了します。")
 
             analysys_results.append(tmp_result)
 
