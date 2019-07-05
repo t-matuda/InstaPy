@@ -2178,6 +2178,7 @@ class InstaPy:
                     action_result[username]["state"] = action_result[username]["state"] and state
                     action_result[username]["links"].append({ "state": state, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg, "link": link })
 
+                    self.logger.info('This action state: {}\n'.format(action_result[username]["state"]))
                     sleep(random.randint(0, 3))
 
                 except NoSuchElementException as err:
@@ -2194,6 +2195,7 @@ class InstaPy:
         self.logger.info('Commented: {}'.format(commented))
         self.logger.info('Inappropriate: {}'.format(inap_img))
         self.logger.info('Not valid users: {}\n'.format(not_valid_users))
+            
 
         self.liked_img += liked_img
         self.already_liked += already_liked
