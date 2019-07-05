@@ -2153,6 +2153,10 @@ class InstaPy:
                             already_liked += 1
 
                         elif msg == "block on likes":
+                            # 1ユーザでもブロックされた時点で処理を中断する
+                            self.logger.info('This action state: {}\n'.format(action_result[username]["state"]))
+                            action_result[username]["state"] = False
+                            action_result[username]["links"].append({ "state": False, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg, "link": link })
                             break
 
                         elif msg == "jumped":
@@ -2177,8 +2181,6 @@ class InstaPy:
                     
                     action_result[username]["state"] = action_result[username]["state"] and state
                     action_result[username]["links"].append({ "state": state, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg, "link": link })
-
-                    self.logger.info('This action state: {}\n'.format(action_result[username]["state"]))
                     sleep(random.randint(0, 3))
 
                 except NoSuchElementException as err:
