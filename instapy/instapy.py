@@ -2154,7 +2154,6 @@ class InstaPy:
 
                         elif msg == "block on likes":
                             # 1ユーザでもブロックされた時点で処理を中断する
-                            self.logger.info('This action state: {}\n'.format(action_result[username]["state"]))
                             action_result[username]["state"] = False
                             action_result[username]["links"].append({ "state": False, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg, "link": link })
                             break
