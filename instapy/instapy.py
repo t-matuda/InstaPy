@@ -2178,6 +2178,8 @@ class InstaPy:
                     action_result[username]["state"] = action_result[username]["state"] and state
                     action_result[username]["links"].append({ "state": state, "like_state": like_state, "scope": scope, "reason": reason, "msg": msg, "link": link })
 
+                    sleep(random.randint(0, 3))
+
                 except NoSuchElementException as err:
                     self.logger.error('Invalid Page: {}'.format(err))
 
