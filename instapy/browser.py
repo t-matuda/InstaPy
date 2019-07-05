@@ -103,7 +103,8 @@ def set_selenium_local_session(proxy_address,
                     '--blink-settings=imagesEnabled=false')
 
             # replaces browser User Agent from "HeadlessChrome".
-            user_agent = "Chrome"
+            # iPhone + Safari
+            user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2 like Mac OS X) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0 Mobile/14C92 Safari/602.1"
             chrome_options.add_argument('user-agent={user_agent}'
                                         .format(user_agent=user_agent))
 

@@ -15,9 +15,9 @@ insta_username = sys.argv[1]  # <- enter username here
 insta_password = sys.argv[2]  # <- enter password here
 session = InstaPy(username=insta_username,
                   password=insta_password,
-                  headless_browser=False,
+                  headless_browser=True,
                   bypass_suspicious_attempt=True)
 
 with smart_run(session):
-    result = session.grab_followers('kaba_proj', 10)
+    result = session.like_by_users(['may_ugram'], 5)
     print(result)
