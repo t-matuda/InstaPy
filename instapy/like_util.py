@@ -392,6 +392,7 @@ def get_links_for_tag(browser,
                 filtered_links = len(links)
                 try_again = 0
                 nap = 1.5
+                logger.info("##### {}/{} #####".format(filtered_links, amount))
     except Exception:
         raise
 
