@@ -14,8 +14,8 @@ xpath['bypass_suspicious_login'] = {
     "send_security_code_button":"//button[text()='Send Security Code']",
     "submit_security_code_button":"//button[text()='Submit']",
     "this_was_me_button":"//button[@name='choice'][text()='This Was Me']",
-    "wrong_login":["//p[text()='Please check the code we sent you and try ","again.']"]
-} #multiline:  wrong login
+    "wrong_login":"//p[text()='Please check the code we sent you and try again.']"
+}
 
 xpath['class_selectors'] = {
     "likes_dialog_body_xpath":"//h1[text()='Likes']/../../following-sibling::div/div",
@@ -27,7 +27,7 @@ xpath['confirm_unfollow'] = {
 }
 
 xpath['dialog_username_extractor'] = {
-    "person":"../../../*"
+    "person":"../../*"
 }
 
 xpath['dismiss_get_app_offer'] = {
@@ -42,10 +42,9 @@ xpath['dismiss_notification_offer'] = {
 
 xpath['extract_information'] = {
     "close_overlay":"//div/div[@role='dialog']",
-    "one_pic_elem":["//section/main/article/div[1]/div/div[10]/div[",
-                    "3]/a/div"],
+    "one_pic_elem":"//section/main/article/div[1]/div/div[10]/div[3]/a/div",
     "like_element":"//a[@role='button']/span[text()='Like']/.."
-} #multiline:  one_pic_elem
+}
 
 xpath['extract_post_info'] = {
     "comment_list":"//div/ul",
@@ -59,12 +58,11 @@ xpath['find_user_id'] = {
 }
 
 xpath['get_active_users'] = {
-    "latest_posts":"//div[contains(@class, '_9AhH0')]",
-    "likers_count":"//div[contains(@class,'Nm9Fw')]/child::button/span",
-    "likes_button":"//div[contains(@class,'Nm9Fw')]/child::button",
-    "next_button":  ["//a[contains(@class, 'HBoOv')]",
-                    "[text()='Next']"],
-    "topCount_elements":"//span[contains(@class,'g47SY')]"
+    "latest_posts": "//div[contains(@class, '_9AhH0')]",
+    "likers_count": "//div[contains(@class,'Nm9Fw')]/child::button/span",
+    "likes_button": "//div[contains(@class,'Nm9Fw')]/child::button",
+    "next_button": "//a[text()='Next']",
+    "topCount_elements": "//span[contains(@class,'g47SY')]"
 } #multiline:  next_button
 
 xpath['get_buttons_from_dialog'] = {
@@ -106,11 +104,10 @@ xpath['get_given_user_followers'] = {
 }
 
 xpath['get_given_user_following'] = {
-    "all_following":["//a[contains",
-                    "(@href,'following')]/span"],
+    "all_following":"//a[contains(@href,'following')]/span",
     "topCount_elements":"//span[contains(@class,'g47SY')]",
     "following_link":'//a[@href="/{}/following/"]'
-} #multiline:  all_following
+}
 
 xpath['get_photo_urls_from_profile'] = {
     "photos_a_elems":"//div/a"
@@ -137,14 +134,10 @@ xpath['get_number_of_posts'] = {
 }
 
 xpath['get_relationship_counts'] = {
-    "following_count":  ["//a[contains",
-                        "(@href,",
-                        "'following')]/span"],
-    "followers_count":  ["//a[contains",
-                        "(@href,",
-                        "'followers')]/span"],
-    "topCount_elements":"//span[contains(@class,'g47SY')]"
-} #multiline: following_count, followers_count
+    "following_count": "//a[contains(@href,'following')]/span",
+    "followers_count": "//a[contains(@href,'followers')]/span",
+    "topCount_elements": "//span[contains(@class,'g47SY')]"
+}
 
 xpath['get_source_link'] = {
     "image":'//img[@class="FFVAD"]',
@@ -176,11 +169,18 @@ xpath['like_from_image'] = {
 }
 
 xpath['login_user'] = {
-    "input_password":"//input[@name='password']",
-    "input_username_XP":"//input[@name='username']",
-    "login_elem":"//a[text()='Log in']",
-    "login_elem_no_such_exception":"//a[text()='Log In']",
-    "nav":'//nav'
+    "input_password": "//input[@name='password']",
+    "input_username_XP": "//input[@name='username']",
+    "login_elem": "//a[text()='Log in']",
+    "login_elem_no_such_exception": "//a[text()='Log In']",
+    "nav": "//nav",
+    "website_status": "//span[@id='status']",
+    "response_time": "//span[@id='response']",
+    "response_code": "//span[@id='code']",
+    "account_disabled": "//p[contains(text(),'Your account has been disabled')]",
+    "add_phone_number": "//h2[text()='Add Your Phone Number']",
+    "suspicious_login_attempt": "//p[text()='Suspicious Login Attempt']",
+    "error_alert": "//p[@id='slfErrorAlert']"
 }
 
 xpath['open_comment_section'] = {
@@ -190,4 +190,22 @@ xpath['open_comment_section'] = {
 xpath['unfollow'] = {
     "following_link":'//section//ul//li[3]',
     "find_dialog_box":"//div[text()='Following']/../../../following-sibling::div"
+}
+
+xpath['watch_story_for_tag'] = {
+    "explore_stories": "//section/main/header/div[1]/div",
+}
+
+xpath['watch_story_for_user'] = {
+    "explore_stories": "//section/main/div/header/div/div",
+}
+
+xpath['watch_story'] = {
+    'next_first': "/html/body/span/section/div/div/section/div[2]/button",
+    "next": "/html/body/span/section/div/div/section/div[2]/button[2]"
+}
+
+xpath['likers_from_photo'] = {
+    "liked_counter_button": "//div/article/div[2]/section[2]/div/div/a",
+    "second_counter_button": "//div/article/div[2]/section[2]/div/div/button"
 }

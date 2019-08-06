@@ -3,6 +3,45 @@ The **goal** of this file is explaining to the users of our project the notable 
 
 _The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)_.
 
+## [0.5.8] - 2019-08-01
+### Added
+- skip user based on profile bio
+
+### Fixed
+- xpath error likers from photo
+
+
+## [0.5.7] - 2019-07-24
+### Fixed
+- user agent error in firefox
+
+
+## [0.5.6] - 2019-07-22
+### Fixed
+- xpath compile multiple errors
+
+### Added
+- feature watch stories
+- always use the lastest user-agent
+
+
+## [0.5.5] - 2019-07-11
+### Fixed
+- `get_action_delay` check for uninitialized delays in settings
+
+
+## [0.5.4] - 2019-07-03
+### Changed
+- Always start chromedriver with --no-sandbox to fix #4607
+
+### Fixed
+- `get_action_delay` method always returning default values #4540
+
+
+## [0.5.3] - 2019-07-02
+### Fixed
+- Argument Being Interpreted as Sequence in `bypass_suspicious_login`
+
 
 ## [0.5.2] - 2019-06-28
 ### Fixed

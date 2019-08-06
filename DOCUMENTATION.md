@@ -50,7 +50,9 @@
   - [Interact by Comments](#interact-by-comments)
   - [Accept pending follow requests](#accept-pending-follow-requests)
   - [Remove outgoing follow requests](#remove-outgoing-follow-requests)
+  - [Skip based on Profile Bio](#skip-based-on-profile-bio)
   - [InstaPy Pods](#instapy-pods)
+  - [InstaPy Stories](#instapy-stories)
   
  <br />
 
@@ -591,14 +593,15 @@ Will skip only users that have more than 1000 posts in their feed
 
 
 ### Custom action delays
-###### _After doing each action- like, comment, follow or unfollow, there is a sleep delay to provide smooth activity flow_.  
+###### _After doing each action- like, comment, follow, unfollow or story, there is a sleep delay to provide smooth activity flow_.  
 ##### But you can set a _custom_ sleep delay for each action yourself by using the `set_action_delays` setting!
 ```python
 session.set_action_delays(enabled=True,
                            like=3,
                            comment=5,
                            follow=4.17,
-                           unfollow=28)
+                           unfollow=28,
+                           story=10)
 ```
 _Now it will sleep `3` seconds **after putting every single like**, `5` seconds for every single comment and similarly for the others.._
 
@@ -1222,6 +1225,44 @@ session.remove_follow_requests(amount=200, sleep_delay=600)
  `engagement_mode`:
  Desided engagement mode for your posts. There are three levels of engagement modes 'light', 'normal' and 'heavy'(`normal` by default). Setting engagement_mode to 'light' encourages approximately 10% of pod members to comment on your post, similarly it's around 30% and 90% for 'normal' and 'heavy' modes respectively. Note: Liking, following or any other kind of engagements doesn't follow these modes.
 
+### Skip based on profile bio
+
+```python
+session.set_skip_users(skip_bio_keyword = ['free shipping',' Order', 'visa', 'paypal'])
+```
+
+This will skip all users that have one these keywords on their bio.
+
+### Activate story watching while interacting
+
+Will add story watching while interacting with users
+
+```python
+session.set_do_story(enabled = True, percentage = 70, simulate = True)
+```
+
+ `simulate`:
+ If set to `True` InstaPy will simulate watching the stories (you won't see it in the browser), we just send commands to Instagram saying we have watched the stories.
+ If set to `False` Instapy will perform the exact same action as a human user (clicking on stories, waiting until watching finishes, etc...)
+
+  Please note: `simulate = False` is the safest settings as it fully disables all additional, simulated interactions
+
+### Watch stories by Tags
+
+Will watch up to 20 stories published with specified tags.
+
+```python
+session.story_by_tags(['tag1', 'tag2'])
+```
+
+### Watch stories from users
+
+Take a list of users and watch their stories.
+
+```python
+session.story_by_users(['user1', 'user2'])
+```
+
 ---
 
 <br /> 
@@ -1635,24 +1676,21 @@ If the web driver you're using doesn't support headless mode (or the headless mo
 session = InstaPy(username='test', password='test', nogui=True)
 ```
 
+
 ### Bypass Suspicious Login Attempt
 
-If you're having issues with the "we detected an unusual login attempt" message,
-you can bypass it setting InstaPy in this way:
+InstaPy detects automatically if the Security Code Challenge
+is active, if yes, it will ask you for the Security Code on
+the terminal.
+
+The Security Code is send to your email by Instagram.
+
+If you want to bypass the Security Code Challenge with your phone number, set `bypass_with_mobile` to `True`.
 
 ```python
-session = InstaPy(username=insta_username, password=insta_password, bypass_suspicious_attempt=True)
-```
-
-```bypass_suspicious_attempt=True``` will send the verification code to your
-email, and you will be prompted to enter the security code sent to your email.
-It will login to your account, now you can set bypass_suspicious_attempt to False
-```bypass_suspicious_attempt=False``` and InstaPy will quickly login using cookies.
-
-If you want to bypass suspicious login attempt with your phone number, set `bypass_with_mobile` to `True`
-
-```python
-InstaPy(username=insta_username, password=insta_password, bypass_suspicious_attempt=True, bypass_with_mobile=True)
+InstaPy(username=insta_username,
+        password=insta_password,
+        bypass_with_mobile=True)
 ```
 
 
